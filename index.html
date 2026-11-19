@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jin Chen | Multi-Robot Systems &amp; Safe Autonomous Control</title>
+<meta name="description" content="Jin Chen, postdoctoral researcher at the University of Granada. Research in multi-robot formation control, safe autonomous driving and data-driven control.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1c2430; --muted:#5b6675; --line:#e3e7ec; --bg:#fbfcfd; --card:#ffffff;
+    --accent:#1f4e79; --accent-soft:#eaf1f8; --tag:#8a5a00; --tag-bg:#fdf3e1;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth; scroll-padding-top:72px}
+  body{margin:0; font-family:Inter,system-ui,sans-serif; font-size:16px; line-height:1.65; color:var(--ink); background:var(--bg)}
+  a{color:var(--accent); text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  /* ---------- nav ---------- */
+  header{position:sticky; top:0; z-index:10; background:rgba(255,255,255,.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--line)}
+  .nav{max-width:1040px; margin:0 auto; padding:0 24px; height:60px; display:flex; align-items:center; justify-content:space-between; gap:16px}
+  .brand{font-family:"Source Serif 4",serif; font-weight:600; font-size:19px; color:var(--ink); white-space:nowrap}
+  .links{display:flex; gap:4px; flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none}
+  .links::-webkit-scrollbar{display:none}
+  .links a{color:var(--muted); font-size:14px; font-weight:500; padding:6px 10px; border-radius:6px; white-space:nowrap}
+  .links a:hover,.links a.active{color:var(--accent); background:var(--accent-soft); text-decoration:none}
+
+  main{max-width:1040px; margin:0 auto; padding:40px 24px 64px}
+  section{padding:28px 0 8px}
+  h2{font-family:"Source Serif 4",serif; font-weight:600; font-size:26px; margin:0 0 18px; padding-bottom:10px; border-bottom:2px solid var(--line); position:relative}
+  h2::after{content:""; position:absolute; left:0; bottom:-2px; width:48px; height:2px; background:var(--accent)}
+  h3{font-size:16px; font-weight:600; margin:22px 0 10px; color:var(--accent)}
+
+  /* ---------- profile ---------- */
+  .profile{display:grid; grid-template-columns:220px 1fr; gap:40px; align-items:start; padding-top:8px}
+  .photo{width:220px; aspect-ratio:4/5; border-radius:12px; background:linear-gradient(145deg,#dfe8f1,#c5d4e3); display:flex; align-items:center; justify-content:center; font-family:"Source Serif 4",serif; font-size:64px; color:#fff; box-shadow:0 6px 20px rgba(31,78,121,.12); overflow:hidden}
+  .photo img{width:100%; height:100%; object-fit:cover}
+  .who h1{font-family:"Source Serif 4",serif; font-size:38px; font-weight:600; margin:0; line-height:1.2}
+  .who .cn{font-size:20px; color:var(--muted); margin-left:10px; font-weight:500}
+  .who .title{font-size:17px; font-weight:500; margin:8px 0 2px}
+  .who .aff{color:var(--muted); margin:0}
+  .who .email{margin:10px 0 0; font-size:15px}
+  .icons{display:flex; flex-wrap:wrap; gap:8px; margin-top:16px}
+  .icons a{display:inline-flex; align-items:center; gap:6px; font-size:13px; font-weight:500; padding:5px 12px; border:1px solid var(--line); border-radius:999px; color:var(--ink); background:var(--card)}
+  .icons a:hover{border-color:var(--accent); color:var(--accent); text-decoration:none}
+  .icons svg{width:15px; height:15px}
+  .bio{margin-top:20px}
+  .bio p{margin:0 0 12px}
+  .interests{display:flex; flex-wrap:wrap; gap:8px; margin-top:6px}
+  .interests span{font-size:13px; background:var(--accent-soft); color:var(--accent); padding:3px 10px; border-radius:6px}
+
+  /* ---------- news ---------- */
+  .news{list-style:none; padding:0; margin:0; max-height:420px; overflow-y:auto; border:1px solid var(--line); border-radius:10px; background:var(--card)}
+  .news li{display:grid; grid-template-columns:96px 1fr; gap:14px; padding:12px 18px; border-bottom:1px solid var(--line)}
+  .news li:last-child{border-bottom:none}
+  .news time{font-variant-numeric:tabular-nums; font-weight:600; color:var(--accent); font-size:14px; padding-top:1px}
+  .badge{display:inline-block; font-size:11px; font-weight:600; letter-spacing:.03em; text-transform:uppercase; color:var(--tag); background:var(--tag-bg); padding:1px 7px; border-radius:4px; margin-right:6px; vertical-align:1px}
+
+  /* ---------- timeline (bio & cv) ---------- */
+  .tl{list-style:none; padding:0; margin:0}
+  .tl li{display:grid; grid-template-columns:170px 1fr; gap:16px; padding:8px 0}
+  .tl .when{color:var(--muted); font-variant-numeric:tabular-nums; font-size:15px}
+  .tl b{font-weight:600}
+  .tl .sub{color:var(--muted); font-size:15px}
+  .btn{display:inline-block; margin-top:14px; padding:8px 18px; background:var(--accent); color:#fff; border-radius:8px; font-weight:500; font-size:14px}
+  .btn:hover{text-decoration:none; opacity:.92}
+
+  /* ---------- publications ---------- */
+  .pub-filter{display:flex; gap:6px; margin-bottom:8px; flex-wrap:wrap}
+  .pub-filter button{font:inherit; font-size:13px; font-weight:500; padding:4px 12px; border:1px solid var(--line); background:var(--card); border-radius:999px; cursor:pointer; color:var(--muted)}
+  .pub-filter button.on{background:var(--accent); border-color:var(--accent); color:#fff}
+  .pubs{list-style:none; padding:0; margin:0; counter-reset:pub}
+  .pubs li{position:relative; padding:12px 0 12px 44px; border-bottom:1px dashed var(--line)}
+  .pubs li::before{counter-increment:pub; content:"[" counter(pub) "]"; position:absolute; left:0; top:12px; color:var(--muted); font-size:14px; font-variant-numeric:tabular-nums}
+  .pubs .t{font-weight:600}
+  .pubs .a{color:var(--muted); font-size:15px}
+  .pubs .a u{color:var(--ink); text-decoration:none; font-weight:600}
+  .pubs .v{font-style:italic; font-size:15px}
+  .pubs .l{margin-top:4px; display:flex; gap:6px; flex-wrap:wrap}
+  .pubs .l a{font-size:12px; font-weight:600; border:1px solid var(--accent); padding:0 8px; border-radius:4px}
+  .pubs .l a:hover{background:var(--accent); color:#fff; text-decoration:none}
+  .note{font-size:14px; color:var(--muted)}
+
+  /* ---------- simple lists ---------- */
+  .plain{list-style:none; padding:0; margin:0}
+  .plain li{display:grid; grid-template-columns:100px 1fr; gap:14px; padding:6px 0}
+  .plain .when{color:var(--muted); font-variant-numeric:tabular-nums}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:0 40px}
+
+  /* ---------- contact ---------- */
+  .contact{display:grid; grid-template-columns:1fr 1fr; gap:24px; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:24px 28px}
+  .contact h4{margin:0 0 6px; font-size:14px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted)}
+  .contact p{margin:0}
+
+
+  .rcards{display:grid; grid-template-columns:1fr 1fr; gap:20px}
+  .rcard{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:20px 22px; border-top:3px solid var(--accent)}
+  .rcard h4{font-family:"Source Serif 4",serif; font-size:20px; font-weight:600; margin:2px 0 8px}
+  .rcard p{margin:0 0 10px; font-size:15px}
+  .rcard ul{margin:0; padding-left:18px; font-size:14.5px}
+  .rcard li{margin:3px 0}
+  .rcard li span{color:var(--muted)}
+  .rtag{font-size:11px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--tag)}
+  .rnote{margin-top:12px !important; font-size:14px !important; color:var(--muted)}
+  @media (max-width:760px){.rcards{grid-template-columns:1fr}}
+  footer{border-top:1px solid var(--line); text-align:center; color:var(--muted); font-size:13px; padding:24px}
+
+  @media (max-width:760px){
+    .brand{display:none}
+    .nav{justify-content:flex-start}
+    .profile{grid-template-columns:1fr; gap:20px}
+    .photo{width:160px}
+    .who h1{font-size:30px}
+    .tl li,.news li,.plain li{grid-template-columns:1fr; gap:0}
+    .grid2,.contact{grid-template-columns:1fr}
+  }
+
+  a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid #b27418;outline-offset:4px}
+  .skip-link{position:absolute;left:16px;top:-60px;padding:10px;background:white;z-index:20}.skip-link:focus{top:8px}
+  .photo{aspect-ratio:827/1063;background:#fff;border-radius:12px;box-shadow:none}
+  .pubs .t a{color:var(--ink)}.pubs sup{color:var(--accent);font-weight:600}
+  .search-label{display:block;font-size:14px;margin:16px 0 6px;font-weight:600}
+  #pubSearch{font:inherit;width:100%;padding:10px 14px;border:1px solid var(--line);border-radius:8px;background:white;margin-bottom:14px}
+  .pubs li[hidden]{display:none}.pub-filter button{font-size:14px;padding:6px 14px}
+  @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  @media print{header,.pub-filter,#pubSearch,.search-label,.skip-link{display:none}body{background:white}main{padding:0}.news{max-height:none}section,.pubs li{break-inside:avoid}a{color:inherit}}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#home">Skip to main content</a>
+
+<header>
+  <nav class="nav">
+    <div class="brand">Jin Chen</div>
+    <div class="links" id="navlinks">
+      <a href="#home">Home</a>
+      <a href="#research">Research</a>
+      <a href="#bio">Bio &amp; CV</a>
+      <a href="#publications">Publications</a>
+      <a href="#awards">Honors &amp; Awards</a>
+      <a href="#projects">Grants</a>
+      <a href="#supervision">Supervision</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ================= HOME ================= -->
+  <section id="home">
+    <div class="profile">
+      <div class="photo"><img src="JinChen.jpg" alt="Portrait of Jin Chen" width="827" height="1063" fetchpriority="high"></div>
+      <div class="who">
+        <h1>Jin Chen</h1>
+        <p class="title">Postdoctoral Researcher</p>
+        <p class="aff">Swarm Systems Lab, Department of Computer Engineering, Automation and Robotics<br>University of Granada, Spain</p>
+        <!-- 邮箱：取消下一行的注释并填写 -->
+        <!-- <p class="email">✉ yourname [at] ugr.es</p> -->
+        <div class="icons">
+          <a href="Jin_Chen_CV.pdf">Download CV (PDF)</a>
+          <a href="https://scholar.google.com/citations?user=_I_qqkMAAAAJ"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.84 3.95A7.98 7.98 0 0 1 12 9a7.98 7.98 0 0 1 7.16 4.45L24 9.5z"/></svg>Google Scholar</a>
+          <a href="https://orcid.org/0000-0003-2368-9536"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zM7.37 4.38a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4zM6.4 8.1h1.94v11.4H6.4zm4.65 0h4.25c4.04 0 5.8 2.9 5.8 5.7 0 3.04-2.38 5.7-5.78 5.7h-4.27zm1.93 1.74v7.92h2.07c2.95 0 3.86-2.24 3.86-3.96 0-2.42-1.53-3.96-3.94-3.96z"/></svg>ORCID</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="bio">
+      <p>I am a postdoctoral researcher with the <b>Swarm Systems Lab</b> at the <b>University of Granada</b>, Spain, working with <b>Dr. Héctor García de Marina</b>. Previously, I was a postdoctoral researcher at the School of Mechanical Engineering, <b>Shanghai Jiao Tong University</b>, hosted by <b>Prof. Yafei Wang</b>, where I received the Shanghai Super Postdoc Award. I received my Ph.D. from the <b>Discrete Technology &amp; Production Automation (DTPA)</b> group, <b>University of Groningen</b>, the Netherlands, in February 2025, supervised by <b>Prof. Bayu Jayawardhana</b> and <b>Prof. Ming Cao</b>.</p>
+      <p>My research spans two directions. In <b>multi-robot systems</b>, I develop scalable distributed formation control methods with limited sensing for robot teams operating with heterogeneous, range-only or otherwise limited information. In <b>autonomous driving</b>, I work on safe and data-driven control of autonomous vehicles, including trajectory tracking under limited data, safe reinforcement learning, and safety-guaranteed control of vehicle platoons. Across both, I emphasize rigorous stability and safety guarantees together with experimental validation. My work has appeared in control, automation and robotics journals, including <i>IEEE Transactions on Automatic Control</i> and <i>IEEE Transactions on Industrial Informatics</i>.</p>
+      <div class="interests"><span>Distributed Formation Control</span><span>Multi-Robot Coordination</span><span>Autonomous Driving</span><span>Safety-Critical Control</span><span>Data-Driven &amp; Learning-Based Control</span></div>
+    </div>
+
+    <h3>News</h3>
+    <ul class="news">
+      <li><time datetime="2026-11">Nov 2026</time><div><span class="badge">Paper</span>Our paper on <a href="https://doi.org/10.1109/JIOT.2026.3755175">epigraph-form reinforcement learning for safe trajectory tracking</a> is available in <b>IEEE Internet of Things Journal</b> (early access).</div></li>
+      <li><time>2026</time><div><span class="badge">Paper</span>"<i>Direct data-driven trajectory tracking control for autonomous vehicles via algebraic regulator under limited data</i>" is published in <b>IEEE Transactions on Industrial Informatics</b>.</div></li>
+      <li><time>2026.04</time><div><span class="badge">Job</span>Joined the Swarm Systems Lab at the University of Granada as a Postdoctoral Researcher.</div></li>
+      <li><time>2026</time><div><span class="badge">Service</span>Invited Session Chair at IEEE ICCA 2026, ICTEC 2026 and CVCI 2027.</div></li>
+      <li><time>2025</time><div><span class="badge">Paper</span>"<i>Dispersion formation control: From geometry to distribution</i>" appeared online in <b>IEEE Transactions on Automatic Control</b> (2026 journal issue).</div></li>
+      <li><time>2025.03</time><div><span class="badge">Job</span>Joined Shanghai Jiao Tong University as a Postdoctoral Researcher, with the Shanghai Super Postdoc Award.</div></li>
+      <li><time>2025.02</time><div><span class="badge">PhD</span>Received my Ph.D. degree from the University of Groningen.</div></li>
+      <li><time>2023</time><div><span class="badge">Award</span>Our university team won the <b>RDW Self-Driving Challenge</b>, which I supervised.</div></li>
+    </ul>
+  </section>
+
+  <!-- ================= RESEARCH ================= -->
+  <section id="research">
+    <h2>Research</h2>
+    <div class="rcards">
+      <div class="rcard">
+        <div class="rtag">Direction 1</div>
+        <h4>Multi-Robot Formation Control</h4>
+        <p>Distributed coordination of robot teams with limited sensing — heterogeneous distance/bearing measurements, range-only information, missing orientation measurements — and safety-critical formation control with control barrier functions, validated on ground robots and drones.</p>
+        <ul>
+          <li>Mixed distance and bearing-only formations <span>(IEEE TAC 2024)</span></li>
+          <li>Dispersion formation control: from geometry to distribution <span>(IEEE TAC 2026)</span></li>
+          <li>Range-only safety-critical formation control <span>(IEEE IoT-J 2025)</span></li>
+          <li>Formation-motion control of unicycles without orientation <span>(IEEE TCNS 2025)</span></li>
+        </ul>
+      </div>
+      <div class="rcard">
+        <div class="rtag">Direction 2</div>
+        <h4>Autonomous Driving</h4>
+        <p>Safe and data-driven control for autonomous vehicles: direct data-driven trajectory tracking under limited data, reinforcement learning with safety guarantees, safety-guaranteed MPC for connected vehicle platoons, and LiDAR-based perception.</p>
+        <ul>
+          <li>Direct data-driven trajectory tracking via algebraic regulator <span>(IEEE TII 2026)</span></li>
+          <li>Epigraph-form RL for safe connected-vehicle tracking <span>(IEEE IoT-J 2026)</span></li>
+          <li>Safe RL trajectory tracking via Lagrangian-PPO <span>(Unmanned Systems 2026)</span></li>
+          <li>MPC of vehicle platoons with high-order CBFs <span>(RAITS 2026)</span></li>
+          <li>Fast segmentation of 3-D point clouds <span>(CVCI 2019)</span></li>
+        </ul>
+        <p class="rnote">Supervised the university team that won the <b>2023 RDW Self-Driving Challenge</b>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= BIO & CV ================= -->
+  <section id="bio">
+    <h2>Bio &amp; CV</h2>
+    <h3>Professional Experience</h3>
+    <ul class="tl">
+      <li><span class="when">04/2026 – present</span><div><b>Postdoctoral Researcher</b>, University of Granada, Spain<div class="sub">Swarm Systems Lab, Department of Computer Engineering, Automation and Robotics · Host: Dr. Héctor García de Marina</div></div></li>
+      <li><span class="when">03/2025 – 04/2026</span><div><b>Postdoctoral Researcher</b>, Shanghai Jiao Tong University, China<div class="sub">School of Mechanical Engineering · Host: Prof. Yafei Wang · Shanghai Super Postdoc Award</div></div></li>
+    </ul>
+    <h3>Education</h3>
+    <ul class="tl">
+      <li><span class="when">01/2021 – 02/2025</span><div><b>Ph.D.</b>, University of Groningen, the Netherlands<div class="sub">Discrete Technology &amp; Production Automation (DTPA) · Supervisors: Prof. Bayu Jayawardhana and Prof. Ming Cao</div></div></li>
+      <li><span class="when">09/2017 – 07/2020</span><div><b>M.S.E. in Vehicle Engineering</b>, Shanghai Jiao Tong University, China</div></li>
+      <li><span class="when">09/2011 – 07/2015</span><div><b>B.E. in Mechanical Engineering and Automation</b>, Jilin University, China</div></li>
+    </ul>
+    <a class="btn" href="Jin_Chen_CV.pdf">Download CV (PDF)</a>
+  </section>
+
+  <!-- ================= PUBLICATIONS ================= -->
+  <section id="publications">
+    <h2>Publications</h2>
+    <p class="note"><sup>*</sup> Corresponding author; multiple stars indicate co-corresponding authors. <b>J. Chen</b> is highlighted. 10 journal articles and 5 conference papers. Full list on <a href="https://scholar.google.com/citations?user=_I_qqkMAAAAJ">Google Scholar</a></p>
+    <label class="search-label" for="pubSearch">Search publications</label>
+    <input id="pubSearch" type="search" placeholder="Title, author, venue or year…">
+    <div class="pub-filter" id="pubFilter" role="group" aria-label="Publication type">
+      <button type="button" class="on" aria-pressed="true" data-f="all">All</button>
+      <button type="button" aria-pressed="false" data-f="journal">Journal</button>
+      <button type="button" aria-pressed="false" data-f="conference">Conference</button>
+
+    </div>
+    <p id="pubCount" class="note" aria-live="polite">15 publications</p>
+    <ol class="pubs" id="pubList">
+<li data-type="journal"><div class="t"><a href="https://doi.org/10.1016/j.conengprac.2026.107310">Real-time safety-critical control for resource-constrained quadrotors via a universal formula</a></div><div class="a">M. Li, Z. Sun<sup title="Corresponding author">*</sup>, <u>J. Chen</u>, and S. Weiland</div><div class="v">Control Engineering Practice, vol. 178, 107310, 2027.</div><div class="l"><a href="https://doi.org/10.1016/j.conengprac.2026.107310">DOI</a></div></li>
+<li data-type="journal"><div class="t"><a href="https://doi.org/10.1109/JIOT.2026.3755175">Epigraph Form Reinforcement Learning-based Safe Trajectory Tracking Control for Connected and Autonomous Vehicles</a></div><div class="a">X. Yang, <u>J. Chen</u><sup title="Corresponding author">*</sup>, Y. Wang<sup title="Corresponding author">*</sup>, Q. Zhang, M. Li, H. Wu, C. Yin, and Y. Zhang</div><div class="v">IEEE Internet of Things Journal, early access, 2026.</div><div class="l"><a href="https://doi.org/10.1109/JIOT.2026.3755175">DOI</a><a href="https://arxiv.org/abs/2611.14903">Preprint</a></div></li>
+<li data-type="journal"><div class="t"><a href="https://doi.org/10.1109/TII.2026.3658768">Direct data-driven trajectory tracking control for autonomous vehicles via algebraic regulator under limited data</a></div><div class="a"><u>J. Chen</u>, L. Li, Y. Wang<sup title="Corresponding author">*</sup>, Q. Zhang, H. Chen, J. Zhou, and M. Wu</div><div class="v">IEEE Transactions on Industrial Informatics, vol. 22, no. 5, pp. 4456-4467, 2026.</div><div class="l"><a href="https://doi.org/10.1109/TII.2026.3658768">DOI</a></div></li>
+<li data-type="journal"><div class="t"><a href="https://doi.org/10.1109/LCSYS.2026.3704361">Tunable input-to-state safety with input constraints</a></div><div class="a">M. Li<sup title="Corresponding author">*</sup>, <u>J. Chen</u>, and D. V. Dimarogonas</div><div class="v">IEEE Control Systems Letters, vol. 10, pp. 943-948, 2026.</div><div class="l"><a href="https://doi.org/10.1109/LCSYS.2026.3704361">DOI</a></div></li>
+<li data-type="journal"><div class="t"><a href="https://doi.org/10.1109/TCNS.2026.3689978">Constructing generalized singularity-free controllers for distance-based formations</a></div><div class="a">Z. Liu, Z. Sun<sup title="Corresponding author">*</sup>, <u>J. Chen</u>, and M. Cao</div><div class="v">IEEE Transactions on Control of Network Systems, vol. 13, no. 2, pp. 1170-1181, 2026.</div><div class="l"><a href="https://doi.org/10.1109/TCNS.2026.3689978">DOI</a></div></li>
+<li data-type="journal"><div class="t"><a href="https://doi.org/10.1142/S2301385027410196">State-based reinforcement learning safe trajectory tracking for autonomous vehicles via geometric safety representation and Lagrangian-PPO</a></div><div class="a">Q. Zhang, X. Yang, <u>J. Chen</u><sup title="Corresponding author">*</sup>, Y. Wang<sup title="Corresponding author">*</sup>, G. Yang, and M. Li</div><div class="v">Unmanned Systems, 2026.</div><div class="l"><a href="https://doi.org/10.1142/S2301385027410196">DOI</a></div></li>
+<li data-type="journal"><div class="t"><a href="https://doi.org/10.1109/TAC.2025.3618971">Dispersion formation control: From geometry to distribution</a></div><div class="a"><u>J. Chen</u><sup title="Corresponding author">*</sup>, J. B. Villar, B. Jayawardhana, and H. G. de Marina</div><div class="v">IEEE Transactions on Automatic Control, vol. 71, no. 3, pp. 2007-2014, 2026.</div><div class="l"><a href="https://doi.org/10.1109/TAC.2025.3618971">DOI</a></div></li>
+<li data-type="journal"><div class="t"><a href="https://doi.org/10.1109/JIOT.2025.3590774">Range-only distributed safety-critical formation control based on contracting bearing estimators and control barrier functions</a></div><div class="a"><u>J. Chen</u>, M. Li, M. Marcantoni, B. Jayawardhana, and Y. Wang<sup title="Corresponding author">*</sup></div><div class="v">IEEE Internet of Things Journal, vol. 12, no. 19, pp. 40968-40979, 2025.</div><div class="l"><a href="https://doi.org/10.1109/JIOT.2025.3590774">DOI</a><a href="https://www.youtube.com/watch?v=iV0pNrtZbxM">Video</a></div></li>
+<li data-type="journal"><div class="t"><a href="https://doi.org/10.1109/TCNS.2024.3435148">Distributed distance-based formation-motion control of unicycle agents without orientation measurements</a></div><div class="a"><u>J. Chen</u><sup title="Corresponding author">*</sup>, B. Jayawardhana, and H. G. de Marina</div><div class="v">IEEE Transactions on Control of Network Systems, vol. 12, no. 1, pp. 144-151, 2025.</div><div class="l"><a href="https://doi.org/10.1109/TCNS.2024.3435148">DOI</a></div></li>
+<li data-type="journal"><div class="t"><a href="https://doi.org/10.1109/TAC.2024.3404708">Scaling up the formation of agents with heterogeneous sensing: Mixed distance and bearing-only</a></div><div class="a"><u>J. Chen</u><sup title="Corresponding author">*</sup>, B. Jayawardhana, and H. G. de Marina</div><div class="v">IEEE Transactions on Automatic Control, vol. 69, no. 11, pp. 8011–8017, 2024.</div><div class="l"><a href="https://doi.org/10.1109/TAC.2024.3404708">DOI</a></div></li>
+<li data-type="conference"><div class="t"><a href="https://doi.org/10.1109/RAITS68656.2026.11580186">Model predictive control of automated vehicle platoons with high-order control barrier functions for safety guarantees</a></div><div class="a"><u>J. Chen</u>, X. Yang, Y. Wang<sup title="Corresponding author">*</sup>, Qi Zhang, Qihang Zhang, and M. Qiu</div><div class="v">2026 International Conference on Robotics, Automation and Intelligent Transportation Systems (RAITS), pp. 1-6, 2026.</div><div class="l"><a href="https://doi.org/10.1109/RAITS68656.2026.11580186">DOI</a></div></li>
+<li data-type="conference"><div class="t"><a href="https://doi.org/10.1109/CDC56724.2024.10886646">Range-only distributed formation control and network localization based on distributed contracting bearing estimators</a></div><div class="a"><u>J. Chen</u><sup title="Corresponding author">*</sup>, M. Marcantoni, and B. Jayawardhana</div><div class="v">2024 IEEE 63rd Conference on Decision and Control (CDC), pp. 70–75, 2024.</div><div class="l"><a href="https://doi.org/10.1109/CDC56724.2024.10886646">DOI</a></div></li>
+<li data-type="conference"><div class="t"><a href="https://doi.org/10.1109/CDC56724.2024.10886190">Generalized singularity-free controller design for distance-based multi-agent formations</a></div><div class="a">Z. Liu, Z. Sun, <u>J. Chen</u>, and M. Cao<sup title="Corresponding author">*</sup></div><div class="v">2024 IEEE 63rd Conference on Decision and Control (CDC), pp. 64–69, 2024.</div><div class="l"><a href="https://doi.org/10.1109/CDC56724.2024.10886190">DOI</a></div></li>
+<li data-type="conference"><div class="t"><a href="https://doi.org/10.23919/ACC55779.2023.10156612">Distance-based formation-motion control for unicycle agents</a></div><div class="a"><u>J. Chen</u><sup title="Corresponding author">*</sup>, B. Jayawardhana, and H. G. de Marina</div><div class="v">2023 American Control Conference (ACC), pp. 1036–1041, 2023.</div><div class="l"><a href="https://doi.org/10.23919/ACC55779.2023.10156612">DOI</a></div></li>
+<li data-type="conference"><div class="t"><a href="https://doi.org/10.1109/CVCI47823.2019.8951690">Fast segmentation of 3-D point clouds based on ground plane state tracking</a></div><div class="a"><u>J. Chen</u>, Y. Wang<sup title="Corresponding author">*</sup>, K. Dai, and T. Ma</div><div class="v">2019 3rd Conference on Vehicle Control and Intelligence (CVCI), pp. 1-6, 2019.</div><div class="l"><a href="https://doi.org/10.1109/CVCI47823.2019.8951690">DOI</a><span class="badge">Best Young Author Runner-up Award</span></div></li>
+</ol>
+  </section>
+
+  <!-- ================= AWARDS ================= -->
+  <section id="awards">
+    <h2>Honors &amp; Awards</h2>
+    <ul class="plain">
+      <li><span class="when">2025</span><span>Shanghai Super Postdoc Award</span></li>
+      <li><span class="when">2023</span><span>Champion, RDW Self-Driving Challenge (as university-team supervisor)</span></li>
+      <li><span class="when">2019</span><span>Best Young Author Runner-up Award, Conference on Vehicle Control and Intelligence (CVCI)</span></li>
+    </ul>
+  </section>
+
+  <!-- ================= GRANTS ================= -->
+  <section id="projects">
+    <h2>Grants &amp; Projects</h2>
+    <ul class="tl">
+      <li><span class="when">Researcher</span><div><b><a href="https://cordis.europa.eu/project/id/101076091">iSwarm: Controlling imperfect robot swarms</a></b>, ERC Starting Grant (No. 101076091), University of Granada, Spain, 2024–2028<div class="sub">PI: Dr. Héctor García de Marina · A control theory that exploits sensor and actuator imperfections (dropouts, delays, scaling errors) to shape the emergent behaviour of robot swarms.</div></div></li>
+
+
+    </ul>
+  </section>
+
+  <!-- ================= SUPERVISION ================= -->
+  <section id="supervision">
+    <h2>Supervision &amp; Teaching</h2>
+    <div class="grid2">
+      <div>
+        <h3>Co-supervised Students</h3>
+        <ul class="plain">
+          <li><span class="when">2025 –</span><span><b>Xiaoke Yang</b> (Ph.D., SJTU) — Reinforcement learning-based safe trajectory tracking control for connected and autonomous vehicles</span></li>
+          <li><span class="when">2025 –</span><span><b>Qi Zhang</b> (M.Sc., SJTU) — State-based reinforcement learning safe trajectory tracking for autonomous vehicles</span></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Teaching</h3>
+        <ul class="plain">
+          <li><span class="when">2024 Spring</span><span>Tutorial, "Signals and Systems" (Bachelor), University of Groningen</span></li>
+          <li><span class="when">2023 Spring</span><span>Tutorial, "Signals and Systems" (Bachelor), University of Groningen</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SERVICES ================= -->
+  <section id="services">
+    <h2>Academic Services</h2>
+    <ul class="plain">
+      <li><span class="when">2027</span><span>Invited Session Chair, Conference on Vehicle Control and Intelligence (CVCI 2027)</span></li>
+      <li><span class="when">2026</span><span>Invited Session Chair, International Conference on Traffic Engineering and Control (ICTEC 2026)</span></li>
+      <li><span class="when">2026</span><span>Invited Session Chair, 20th IEEE International Conference on Control and Automation (ICCA 2026)</span></li>
+    </ul>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section id="contact">
+    <h2>Contact</h2>
+    <div class="contact">
+      <div>
+        <h4>Address</h4>
+        <p><a href="https://www.swarmsystemslab.eu/">Swarm Systems Lab</a><br>Department of Computer Engineering, Automation and Robotics<br>University of Granada, Granada, Spain</p>
+      </div>
+      <div>
+        <h4>Email</h4>
+        <p><a href="mailto:jinchen920414@gmail.com">jinchen920414@gmail.com</a></p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>© 2026 Jin Chen · Last updated: 19 November 2026</footer>
+
+
+<script>
+  const filter = document.getElementById('pubFilter');
+  const search = document.getElementById('pubSearch');
+  let selectedType = 'all';
+  function updatePublications(){
+    const query = search.value.trim().toLocaleLowerCase();
+    let count = 0;
+    document.querySelectorAll('#pubList li').forEach(li => {
+      li.hidden = !((selectedType === 'all' || li.dataset.type === selectedType) && li.textContent.toLocaleLowerCase().includes(query));
+      if (!li.hidden) count++;
+    });
+    document.getElementById('pubCount').textContent = count ? `${count} publication${count === 1 ? '' : 's'}` : 'No publications match your search.';
+  }
+  filter.addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    filter.querySelectorAll('button').forEach(x => {x.classList.toggle('on', x === b);x.setAttribute('aria-pressed', String(x === b));});
+    selectedType = b.dataset.f; updatePublications();
+  });
+  search.addEventListener('input', updatePublications);
+  // highlight current section in nav
+  const links = [...document.querySelectorAll('#navlinks a')];
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (en.isIntersecting) links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + en.target.id));
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  document.querySelectorAll('main section').forEach(s => obs.observe(s));
+</script>
+</body>
+</html>
